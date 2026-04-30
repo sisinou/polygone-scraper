@@ -2,9 +2,6 @@
 venv/
 .env
 
-# Ne pas versionner les données extraites
-data/
-
 # Ne pas versionner les logs d'erreurs
 logs/
 
