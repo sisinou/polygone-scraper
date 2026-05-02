@@ -8,3 +8,5 @@ logs/
 # Fichiers caches de Python
 __pycache__/
 *.pyc
+
+data/
