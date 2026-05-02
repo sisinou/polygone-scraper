@@ -1,13 +1,22 @@
 import os
 import time
-from utils import initialiser_navigateur
+from .utils import initialiser_navigateur
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
-def telecharger_page(url, chemin_sauvegarde, pagination_config=None):
-    """Télécharge le code source d'une URL. Gère la pagination si une configuration est fournie."""
+def telecharger_page(url, chemin_sauvegarde, pagination_config=None, cache_jours=7):
+    """Télécharge le code source d'une URL. Gère la pagination si une configuration est fournie.
+    Si le fichier HTML existe et a moins de cache_jours jours, il est réutilisé sans relancer Chrome.
+    Mettre cache_jours=0 pour forcer le téléchargement."""
+    # Vérification du cache
+    if cache_jours > 0 and os.path.exists(chemin_sauvegarde):
+        age_jours = (time.time() - os.path.getmtime(chemin_sauvegarde)) / 86400
+        if age_jours < cache_jours:
+            print(f"  Cache valide ({age_jours:.1f}j < {cache_jours}j) → {chemin_sauvegarde}")
+            return True
+
     print(f"Téléchargement de {url}...")
     driver = initialiser_navigateur()
     try:
@@ -79,17 +88,3 @@ def telecharger_page(url, chemin_sauvegarde, pagination_config=None):
         
     finally:
         driver.quit()
-
-def main():
-    print("Étape 1 : Lancement du téléchargement pour Polygone (exemple)")
-    url_polygone = "https://www.polygone.com/shopping.htm"
-    chemin_sauvegarde_polygone = "data/1_pages_html/polygone.html"
-    # Exemple d'appel avec pagination pour le test
-    pagination_config = {
-        "next_button_selector": "div.pagination a.next",
-        "items_container_selector": "div.items" 
-    }
-    telecharger_page(url_polygone, chemin_sauvegarde_polygone, pagination_config=pagination_config)
-
-if __name__ == "__main__":
-    main()

@@ -5,8 +5,8 @@ import re
 import unicodedata
 
 # Import fonctions de scrap
-from step1_download import telecharger_page
-from step2_parse import (
+from steps.step1_download import telecharger_page
+from steps.step2_parse import (
     lire_et_parser_html,
     ecrire_csv,
     consolider_csv,
@@ -14,7 +14,7 @@ from step2_parse import (
     parser_polygone_perpignan,
     parser_polygone_beziers,
 )
-from step3_enrich import enrichir_avec_telephone
+from steps.step3_enrich import enrichir_avec_telephone
 
 SITES_A_SCRAPER = [
     {

@@ -1,23 +1,33 @@
-# Polygone Scraper
-Ce projet récupère la liste des boutiques du centre commercial Polygone.
+# Scraper Polygone
 
-## Comment l'utiliser ?
-1. Installer les prérequis : `pip install -r requirements.txt`
-2. Lancer le scraper principal : `python src/run_scraper.py`
-3. Les résultats pour chaque site apparaîtront dans `data/2_resultats_csv/`
+Collecte des boutiques des 3 centres Polygone (Montpellier, Perpignan, Béziers) avec catégorie, téléphone, centre commercial et date de collecte. Résultat exporté en CSV prêt pour Power BI.
 
+> Le script prend du temps à cause de l'enrichissement téléphone : chaque boutique nécessite une requête individuelle sur sa page. Un délai aléatoire de 0.8 à 2 secondes est appliqué entre chaque requête (voir `steps/step3_enrich.py`) pour imiter un comportement humain et éviter d'être bloqué par les sites.
 
+**282 boutiques collectées** sur 3 centres commerciaux.
 
-consigne 
+---
 
-bdd exploitable
-combien de magasin par centre commerciaux
-taille moyenne centre commerciale
-brancher a un outil comme power bi ou autre
-la qualité des données donc il faut plusieur centre avec les owner avec les magasin les dates d'ouverture et fermeture avec classification type magasin de sport cosmetheque ou autre
-l'oganisation des scipt bien separée pour chaque tache
-prise en compte des erreur
-une premiere etapes avec juste l'extraction avec une partie sauvegarrder car il se peut que la page change
-prendre plein de centre avec plein de magasin il faut beaucoup de sources et qualitatif
-comportement possible type humain ca rajoute les point, il faut creuser un sujet qui interesse
-quelque centre quelque magasin avec categori et info c'est la moyenne
+## Installation
+
+```bash
+pip install -r requirement.txt
+```
+
+---
+
+## Lancement
+
+### Mode local (pages HTML déjà téléchargées)
+
+```bash
+cd src
+python run_parser_local.py
+```
+
+### Mode complet (téléchargement via Chrome + parsing)
+
+```bash
+cd src
+python run_scraper.py
+```

@@ -4,7 +4,7 @@
 
 import os
 
-from step2_parse import (
+from steps.step2_parse import (
     lire_et_parser_html,
     ecrire_csv,
     consolider_csv,
@@ -12,7 +12,7 @@ from step2_parse import (
     parser_polygone_perpignan,
     parser_polygone_beziers,
 )
-from step3_enrich import enrichir_avec_telephone
+from steps.step3_enrich import enrichir_avec_telephone
 
 DOSSIER_HTML = os.path.join("data", "1_pages_html")
 DOSSIER_CSV  = os.path.join("data", "2_resultats_csv")
@@ -73,7 +73,7 @@ def main():
             for cat_nom, nom_fichier in site["categories"].items():
                 chemin_html = os.path.join(DOSSIER_HTML, nom_fichier)
                 if not os.path.exists(chemin_html):
-                    print(f"  ⚠️  Fichier manquant (ignoré) : {nom_fichier}")
+                    print(f"    Fichier manquant (ignoré) : {nom_fichier}")
                     continue
                 boutiques = lire_et_parser_html(chemin_html, site["parser"], categorie=cat_nom)
                 print(f"  {cat_nom} -> {len(boutiques)} boutiques")
@@ -81,7 +81,7 @@ def main():
         else:
             chemin_html = os.path.join(DOSSIER_HTML, site["fichier"])
             if not os.path.exists(chemin_html):
-                print(f"  ⚠️  Fichier manquant (ignoré) : {site['fichier']}")
+                print(f"    Fichier manquant (ignoré) : {site['fichier']}")
                 continue
             boutiques = lire_et_parser_html(chemin_html, site["parser"])
             print(f"  Page unique → {len(boutiques)} boutiques")
